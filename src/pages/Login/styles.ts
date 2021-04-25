@@ -42,6 +42,9 @@ export const SubContainer = styled.div`
     border: 1px solid var(--input-border);
     border-radius: 6px;
     background-color: var(--input-background);
+    color: var(--input-text);
+    font-weight: 600;
+    letter-spacing: 0.01rem;
 
     &:focus {
       outline: none;
