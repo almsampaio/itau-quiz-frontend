@@ -1,1 +1,74 @@
 import styled from 'styled-components';
+
+export const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+`;
+
+export const SubContainer = styled.div`
+  transform: translate(-1.5rem, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 23rem;
+  height: 100%;
+
+  h1 {
+    margin: 4rem 0 2.5rem 0;
+    font-size: 2rem;
+    color: var(--primary-color);
+  }
+
+  p {
+    margin-bottom: 4rem;
+    font-size: 1.2rem;
+  }
+
+  label {
+    display: block;
+    width: 23rem;
+    padding-left: 1rem;
+    font-size: 1.1rem;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    margin: 0.6rem 0 3.125rem 0;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    background-color: var(--input-background);
+
+    &:focus {
+      outline: none;
+      border: 2px solid var(--primary-color);
+      background-color: var(--input-focus);
+    }
+  }
+
+  div {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    margin-top: 4.375rem;
+
+    input[type="submit"] {
+      cursor: pointer;
+      width: 12.5rem;
+      background-color: var(--primary-color);
+      color: var(--shape);
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    a {
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text-body);
+    }
+  }
+`;

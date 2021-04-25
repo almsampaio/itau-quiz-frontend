@@ -57,7 +57,7 @@ export const FormContainer = styled.section`
     width: 100%;
     height: 100%;
     background: var(--secondary-color);
-    transform: translate(-2rem, 2rem);
+    transform: translate(-1.5rem, 1.5rem);
     border-radius: 50px;
     z-index: -1;
   }
@@ -67,7 +67,7 @@ export const FormContainer = styled.section`
     width: 100%;
     height: 100%;
     border: 5px solid var(--secondary-color);
-    transform: translate(2rem, -2rem);
+    transform: translate(1.5rem, -1.5rem);
     border-radius: 50px;
     z-index: 1;
   }
