@@ -15,7 +15,7 @@ export const SubContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const HeroDiv = styled.div`
+export const Hero = styled.div`
   display: flex;
   align-items: center;
   position: relative;
@@ -41,5 +41,34 @@ export const HeroDiv = styled.div`
     padding-left: 11.5rem;
     transform: translate(0%, -5%);  
     z-index: 2;
+  }
+`;
+
+export const FormContainer = styled.section`
+  position: relative;
+  background: #fff;
+  width: 35.75rem;
+  height: 44rem;
+  background: var(--shape);
+  border-radius: 50px;
+
+  div.blue-shadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--secondary-color);
+    transform: translate(-2rem, 2rem);
+    border-radius: 50px;
+    z-index: -1;
+  }
+
+  div.blue-border {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 5px solid var(--secondary-color);
+    transform: translate(2rem, -2rem);
+    border-radius: 50px;
+    z-index: 1;
   }
 `;

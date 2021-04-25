@@ -1,11 +1,12 @@
-import { Hero } from '../../components/Hero';
+import { LandingPageLayout } from '../../components/LandingPageLayout';
 
-import { FormContainer } from './styles';
+import { } from './styles';
 
 export function Login() {
   return (
-    <Hero>
-      <FormContainer>aloha</FormContainer>
-    </Hero>
+    <LandingPageLayout>
+      <h1>Quizes</h1>
+      <p>Entrar na plataforma</p>
+    </LandingPageLayout>
   );
 };
