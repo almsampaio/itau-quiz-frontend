@@ -1,20 +1,9 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-`;
-
-export const SubContainer = styled.div`
-  transform: translate(-1.5rem, 1.5rem);
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  width: 23rem;
-  height: 100%;
 
   h1 {
     margin: 4rem 0 2.5rem 0;
@@ -57,7 +46,10 @@ export const SubContainer = styled.div`
     width: 100%;
     display: grid;
     place-items: center;
-    margin-top: 4.375rem;
+
+    &:last-child {
+      margin-top: 1.25rem;
+    }
 
     input[type="submit"] {
       cursor: pointer;

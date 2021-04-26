@@ -44,9 +44,8 @@ export const Hero = styled.div`
   }
 `;
 
-export const FormContainer = styled.section`
+export const FormBordersDesign = styled.section`
   position: relative;
-  background: #fff;
   width: 35.75rem;
   height: 44rem;
   background: var(--shape);
@@ -70,5 +69,14 @@ export const FormContainer = styled.section`
     transform: translate(1.5rem, -1.5rem);
     border-radius: 50px;
     z-index: 1;
+
+    display: grid;
+    place-items: center;
   }
+`;
+
+export const FormContainer = styled.div`
+  transform: translate(-1.5rem, 1.5rem);
+  width: 23rem;
+  height: 100%;
 `;

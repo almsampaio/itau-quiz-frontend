@@ -1,7 +1,13 @@
 import { ReactNode } from 'react';
 import logoImg from '../../assets/logo.svg';
 
-import { Container, SubContainer, FormContainer, Hero } from './styles';
+import {
+  Container,
+  SubContainer,
+  FormBordersDesign,
+  FormContainer,
+  Hero,
+} from './styles';
 
 interface HeroProps {
   children: ReactNode;
@@ -15,12 +21,14 @@ export function LandingPageLayout({ children }: HeroProps) {
           <img src={ logoImg } alt="Itaú"/>
           <h1>Quiz</h1>
         </Hero>
-        <FormContainer>
+        <FormBordersDesign>
           <div className="blue-shadow" />
           <div className="blue-border">
-            {children}
+            <FormContainer>
+              {children}
+            </FormContainer>
           </div>
-        </FormContainer>
+        </FormBordersDesign>
       </SubContainer>
     </Container>
   );
