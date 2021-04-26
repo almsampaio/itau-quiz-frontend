@@ -34,6 +34,8 @@ export const GlobalStyle = createGlobalStyle`
   body, input, textarea, button {
     font-family: 'Myriad Pro', 'Source Sans Pro', sans-serif;
     font-weight: 400;
+    color: var(--text-body);
+    letter-spacing: 0.01125rem;
   }
 
   h1, h2, h3, h4, h5, h6, strong {

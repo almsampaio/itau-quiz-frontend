@@ -16,7 +16,7 @@ function App() {
     <StoreProvider>
       <Switch>
         <Route path="/forgot-password" component={ ForgotPassword } />
-        <Route path="/" exact component={ Login } />
+        <Route path="/login" exact component={ Login } />
       </Switch>
       <GlobalStyle />
     </StoreProvider>
