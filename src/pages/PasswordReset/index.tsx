@@ -5,10 +5,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Form } from './styles';
 
 type Inputs = {
-  email: string;
+  newPassword: string;
+  confirmPassword: string;
 };
 
-export function ForgotPassword() {
+export function PasswordReset() {
 
   const {
     register,
@@ -31,21 +32,25 @@ export function ForgotPassword() {
         <p>Redefinir senha</p>
         
         <div>
-          <label>E-mail</label>
+          <label>Nova senha</label>
           <input
-            {...register("email", {
-              required: true,
-              pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-            })}
+            type="password"
+            {...register("newPassword", { required: true})}
             />
-          {/* {errors.email && <p>Enter a valid email</p>} */}
+          {/* {errors.password && <p>This field is required</p>} */}
         </div>
 
-        <p className="password-instructions">Informe o e-mail para o qual você deseja redefinir a senha.</p>
+        <div>
+          <label>Confirmação nova senha</label>
+          <input
+            type="password"
+            {...register("confirmPassword", { required: true})}
+            />
+          {/* {errors.password && <p>This field is required</p>} */}
+        </div>
 
         <div>
-          <input type="submit" value="Enviar" />
-          <Link to="/login">Voltar para login</Link>
+          <input type="submit" value="Entrar" />
         </div>
       </Form>
     </LandingPageLayout>
