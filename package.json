@@ -2,10 +2,21 @@
   "name": "itau-quiz-frontend",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
+    "@chakra-ui/react": "^1.5.2",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
     "axios": "^0.21.1",
+    "framer-motion": "^4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "styled-components": "^5.2.3",
@@ -22,12 +33,6 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.9",
     "typescript": "^4.1.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

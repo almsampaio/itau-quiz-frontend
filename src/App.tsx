@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Login } from './pages/Login';
+import { ForgotPassword } from './pages/ForgotPassword';
+import { ResetPassword } from './pages/ResetPassword';
+import { QuizForm } from './pages/QuizForm';
+import { Switch, Route } from 'react-router-dom';
+import { StoreProvider, useStore } from './hooks/store';
+
+import { GlobalStyle } from './styles/global';
 
 function App() {
+  const [store] = useStore();
+
+  if (!store) {
+    return <Login />;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StoreProvider>
+      <Switch>
+        <Route path="/login" exact component={ Login } />
+        <Route path="/password-reset" component={ ResetPassword } />
+        <Route path="/forgot-password" component={ ForgotPassword } />
+        <Route path="/quiz-form" exact component={ QuizForm } />
+      </Switch>
+      <GlobalStyle />
+    </StoreProvider>
   );
 }
 
