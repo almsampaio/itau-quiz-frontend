@@ -1,6 +1,7 @@
 import { Login } from './pages/Login';
 import { ForgotPassword } from './pages/ForgotPassword';
-import { PasswordReset } from './pages/PasswordReset';
+import { ResetPassword } from './pages/ResetPassword';
+import { QuizForm } from './pages/QuizForm';
 import { Switch, Route } from 'react-router-dom';
 import { StoreProvider, useStore } from './hooks/store';
 
@@ -16,9 +17,10 @@ function App() {
   return (
     <StoreProvider>
       <Switch>
-        <Route path="/password-reset" component={ PasswordReset } />
-        <Route path="/forgot-password" component={ ForgotPassword } />
         <Route path="/login" exact component={ Login } />
+        <Route path="/password-reset" component={ ResetPassword } />
+        <Route path="/forgot-password" component={ ForgotPassword } />
+        <Route path="/quiz-form" exact component={ QuizForm } />
       </Switch>
       <GlobalStyle />
     </StoreProvider>
