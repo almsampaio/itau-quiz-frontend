@@ -3,27 +3,26 @@ import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
 import { QuizForm } from './pages/QuizForm';
 import { Switch, Route } from 'react-router-dom';
-import { StoreProvider, useStore } from './hooks/store';
+import { AuthProvider } from './hooks/auth';
+
+import { PrivateRoute } from './routes/PrivateRoute';
 
 import { GlobalStyle } from './styles/global';
 
 function App() {
-  const [store] = useStore();
-
-  if (!store) {
-    return <Login />;
-  }
 
   return (
-    <StoreProvider>
+    <AuthProvider>
       <Switch>
         <Route path="/login" exact component={ Login } />
         <Route path="/password-reset" component={ ResetPassword } />
         <Route path="/forgot-password" component={ ForgotPassword } />
-        <Route path="/quiz-form" exact component={ QuizForm } />
+        <PrivateRoute path="/quiz-form">
+          <QuizForm />
+        </PrivateRoute>
       </Switch>
       <GlobalStyle />
-    </StoreProvider>
+    </AuthProvider>
   );
 }
 

@@ -1,7 +1,7 @@
 import { LandingPageLayout } from '../../components/LandingPageLayout';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from 'react-router-dom';
-import { useStore } from '../../hooks/store';
+import { useAuth } from '../../hooks/auth';
 import axios from 'axios';
 
 import { Form } from './styles';
@@ -12,7 +12,7 @@ type Inputs = {
 };
 
 export function Login() {
-  const [setStore] = useStore();
+  //const {updateAuth} = useAuth();
 
   const {
     register,
@@ -23,11 +23,12 @@ export function Login() {
   const onSubmit: SubmitHandler<Inputs> = async (user) => {
     console.log(user);
     // try {
-    //   const { data } = await axios.post('loginLink', { user });
-    //   setStore(prevState => ({...prevState, auth: data}));
+    //   const { token } = await axios.post('loginLink', { user });
+    //   updateAuth(token);
     // } catch (error) { console.log(error) }
   }; 
 
+  console.log('login page')
   return (
     <LandingPageLayout>
       <Form onSubmit={handleSubmit(onSubmit)}>
