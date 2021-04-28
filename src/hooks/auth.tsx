@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactNode, createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType );
@@ -16,12 +17,12 @@ interface AuthContextType {
   updateAuth: (token: string) => void;
 }
 
-export function useAuth() {
+export function useAuth() : AuthContextType {
   const {auth, updateAuth} = useContext(AuthContext);
   return {auth, updateAuth};
 }
 
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }: AuthProviderProps) : JSX.Element {
   const [auth, setAuth] = useState({
     token: '',
     rehydrated: false,
@@ -34,7 +35,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       token: JSON.parse(data),
       rehydrated: true,
       }));
-  };
+  }
   
   useEffect(() => {
     rehydrate();

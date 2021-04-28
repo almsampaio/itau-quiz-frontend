@@ -1,4 +1,5 @@
-import { ReactNode, useEffect, useState } from 'react';
+import React from 'react';
+import { ReactNode } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
 
@@ -7,10 +8,8 @@ interface PrivateRouteProps {
   path: string;
 }
 
-export function PrivateRoute({ children, path }: PrivateRouteProps) {
-  console.log(useAuth());
-  const {auth} = useAuth();
-  console.log('PrivateRoute');
+export function PrivateRoute({ children, path }: PrivateRouteProps) : JSX.Element {
+  const { auth } = useAuth();
 
   return (
     auth.rehydrated

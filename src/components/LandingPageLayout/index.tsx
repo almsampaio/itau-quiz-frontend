@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactNode } from 'react';
 import logoImg from '../../assets/logo.svg';
 
@@ -13,7 +14,7 @@ interface HeroProps {
   children: ReactNode;
 }
 
-export function LandingPageLayout({ children }: HeroProps) {
+export function LandingPageLayout({ children }: HeroProps) : JSX.Element {
   return (
     <Container>
       <SubContainer>
@@ -32,4 +33,4 @@ export function LandingPageLayout({ children }: HeroProps) {
       </SubContainer>
     </Container>
   );
-};
+}

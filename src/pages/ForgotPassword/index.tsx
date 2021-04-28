@@ -1,3 +1,4 @@
+import React from 'react';
 import { LandingPageLayout } from '../../components/LandingPageLayout';
 import { Link } from 'react-router-dom';
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -8,7 +9,7 @@ type Inputs = {
   email: string;
 };
 
-export function ForgotPassword() {
+export function ForgotPassword() : JSX.Element {
 
   const {
     register,
@@ -50,4 +51,4 @@ export function ForgotPassword() {
       </Form>
     </LandingPageLayout>
   );
-};
+}
