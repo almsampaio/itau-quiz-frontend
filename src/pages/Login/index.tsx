@@ -18,7 +18,7 @@ export function Login() : JSX.Element {
   const {
     register,
     handleSubmit,
-    // formState: { errors }
+    formState: { errors }
   } = useForm<Inputs>();
   
   const onSubmit: SubmitHandler<Inputs> = async (user) => {
@@ -42,20 +42,22 @@ export function Login() : JSX.Element {
           <label>E-mail</label>
           <input
             {...register("email", {
-              required: true,
-              pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+              required: { value: true, message: 'Este campo é obrigatório' },
+              pattern: { value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, message: 'E-mail inválido'},
             })}
             />
-          {/* {errors.email && <p>Enter a valid email</p>} */}
+          {errors.email && <span>{errors.email.message}</span>}
         </div>
 
         <div>
           <label>Senha</label>
           <input
             type="password"
-            {...register("password", { required: true})}
+            {...register("password", {
+              required: { value: true, message: 'Este campo é obrigatório' },
+            })}
             />
-          {/* {errors.password && <p>This field is required</p>} */}
+          {errors.password && <span>{errors.password.message}</span>}
         </div>
 
         <div>

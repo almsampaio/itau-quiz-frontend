@@ -43,7 +43,9 @@ export function ResetPassword() : JSX.Element {
           <label>Nova senha</label>
           <input
             type="password"
-            {...register("newPassword", { required: { value: true, message: 'Este campo é obrigatório' }})}
+            {...register("newPassword", {
+              required: { value: true, message: 'Este campo é obrigatório' },
+            })}
             />
           {errors.newPassword && <span>{errors.newPassword.message}</span>}
         </div>
@@ -58,7 +60,6 @@ export function ResetPassword() : JSX.Element {
             })}
             />
           {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
-          {console.log(errors.confirmPassword)}
         </div>
 
         <div>
