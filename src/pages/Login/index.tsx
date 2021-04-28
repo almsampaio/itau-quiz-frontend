@@ -1,8 +1,9 @@
+import React from 'react';
 import { LandingPageLayout } from '../../components/LandingPageLayout';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from 'react-router-dom';
-import { useStore } from '../../hooks/store';
-import axios from 'axios';
+import { useAuth } from '../../hooks/auth';
+import { api } from '../../services/api';
 
 import { Form } from './styles';
 
@@ -11,8 +12,8 @@ type Inputs = {
   password: string;
 };
 
-export function Login() {
-  const [setStore] = useStore();
+export function Login() : JSX.Element {
+  const {updateAuth} = useAuth();
 
   const {
     register,
@@ -21,13 +22,16 @@ export function Login() {
   } = useForm<Inputs>();
   
   const onSubmit: SubmitHandler<Inputs> = async (user) => {
-    console.log(user);
-    // try {
-    //   const { data } = await axios.post('loginLink', { user });
-    //   setStore(prevState => ({...prevState, auth: data}));
-    // } catch (error) { console.log(error) }
+    console.log(user, 'user');
+    try {
+      const response = await api.post('authenticate', { user });
+      console.log(response);
+      // const { token } = await axios.post('/authenticate', { user });
+      // updateAuth(token);
+    } catch (error) { console.log(error) }
   }; 
 
+  console.log('login page')
   return (
     <LandingPageLayout>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -61,4 +65,4 @@ export function Login() {
       </Form>
     </LandingPageLayout>
   );
-};
+}

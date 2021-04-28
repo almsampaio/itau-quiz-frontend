@@ -1,5 +1,7 @@
+import React from 'react';
 import { LandingPageLayout } from '../../components/LandingPageLayout';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+// , useParams
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { Form } from './styles';
@@ -9,7 +11,7 @@ type Inputs = {
   confirmPassword: string;
 };
 
-export function ResetPassword() {
+export function ResetPassword() : JSX.Element {
   // const { token } = useParams();
 
   const {
@@ -66,4 +68,4 @@ export function ResetPassword() {
       </Form>
     </LandingPageLayout>
   );
-};
+}
