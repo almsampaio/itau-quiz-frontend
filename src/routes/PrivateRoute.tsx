@@ -7,6 +7,9 @@ interface PrivateRouteProps {
   children: ReactNode;
   path: string;
 }
+interface RenderProps {
+  location: string;
+}
 
 export function PrivateRoute({ children, path }: PrivateRouteProps) : JSX.Element {
   const { auth } = useAuth();
@@ -16,7 +19,7 @@ export function PrivateRoute({ children, path }: PrivateRouteProps) : JSX.Elemen
     ? (
       <Route
         path={path}
-        render={({ location }) => {
+        render={({ location }: RenderProps ) => {
           return (
             auth.token
             ? (
