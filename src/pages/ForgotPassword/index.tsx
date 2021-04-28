@@ -14,7 +14,7 @@ export function ForgotPassword() : JSX.Element {
   const {
     register,
     handleSubmit,
-    // formState: { errors }
+    formState: { errors }
   } = useForm<Inputs>();
   
   const onSubmit: SubmitHandler<Inputs> = async (email) => {
@@ -35,11 +35,11 @@ export function ForgotPassword() : JSX.Element {
           <label>E-mail</label>
           <input
             {...register("email", {
-              required: true,
-              pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+              required: { value: true, message: 'Este campo é obrigatório' },
+              pattern: { value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, message: 'E-mail inválido' },
             })}
             />
-          {/* {errors.email && <p>Enter a valid email</p>} */}
+          {errors.email && <span>{errors.email.message}</span>}
         </div>
 
         <p className="password-instructions">Informe o e-mail para o qual você deseja redefinir a senha.</p>
