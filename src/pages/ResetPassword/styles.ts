@@ -17,6 +17,12 @@ export const Form = styled.form`
     letter-spacing: 0.045rem;
   }
 
+  p.password-instructions {
+    font-size: 1.1rem;
+    margin: 0.8rem 1rem 3.5rem 1rem;
+    line-height: 2rem;
+  }
+
   label {
     display: block;
     width: 23rem;
@@ -49,7 +55,7 @@ export const Form = styled.form`
     place-items: center;
 
     &:last-child {
-      margin-top: 1.25rem;
+      margin-top: 0.5rem;
     }
 
     input[type="submit"] {
