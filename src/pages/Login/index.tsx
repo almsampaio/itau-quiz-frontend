@@ -1,7 +1,7 @@
 import React from 'react';
 import { LandingPageLayout } from '../../components/LandingPageLayout';
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
 
@@ -14,6 +14,7 @@ type Inputs = {
 
 export function Login() : JSX.Element {
   const {updateAuth} = useAuth();
+  const history = useHistory();
 
   const {
     register,
@@ -22,12 +23,14 @@ export function Login() : JSX.Element {
   } = useForm<Inputs>();
   
   const onSubmit: SubmitHandler<Inputs> = async (user) => {
-    console.log(user, 'user');
     try {
-      const response = await api.post('authenticate', { user });
-      console.log(response);
-      // const { token } = await axios.post('/authenticate', { user });
-      // updateAuth(token);
+      const { data } = await api.post('/authenticate', user, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      updateAuth(data.token);
+      history.push('/');
     } catch (error) { console.log(error) }
   }; 
 
@@ -47,6 +50,7 @@ export function Login() : JSX.Element {
             })}
             />
           {errors.email && <span>{errors.email.message}</span>}
+          {console.log(register)}
         </div>
 
         <div>

@@ -1,14 +1,11 @@
 import React from 'react';
 import { ReactNode } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
 
-interface PrivateRouteProps {
+interface PrivateRouteProps  {
   children: ReactNode;
   path: string;
-}
-interface RenderProps {
-  location: string;
 }
 
 export function PrivateRoute({ children, path }: PrivateRouteProps) : JSX.Element {
@@ -19,7 +16,7 @@ export function PrivateRoute({ children, path }: PrivateRouteProps) : JSX.Elemen
     ? (
       <Route
         path={path}
-        render={({ location }: RenderProps ) => {
+        render={({ location }: RouteComponentProps ) => {
           return (
             auth.token
             ? (
