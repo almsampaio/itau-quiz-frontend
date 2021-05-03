@@ -30,11 +30,15 @@ function App() : JSX.Element {
             }}
           />
           <Route path="/login" exact component={ Login } />
-          <Route path="/password-reset" component={ ResetPassword } />
+          <Route path="/password-reset/:token" component={ ResetPassword } />
           <Route path="/forgot-password" component={ ForgotPassword } />
           <PrivateRoute path="/quiz-form">
             <QuizForm />
           </PrivateRoute>
+
+          <Route>
+            <Redirect to="/" />
+          </Route>
         </Switch>
         <GlobalStyle />
       </>
