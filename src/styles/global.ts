@@ -12,6 +12,8 @@ export const GlobalStyle = createGlobalStyle`
     --input-border: #CED1D69A;
     --input-focus: #FF97384D;
     --input-text: #676A79;
+
+    --yellow-border: #FDED0B;
   }
   
   * {

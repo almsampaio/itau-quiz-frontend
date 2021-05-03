@@ -4,7 +4,7 @@ import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
 import { QuizForm } from './pages/QuizForm';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { AuthProvider, useAuth } from './hooks/auth';
+import { useAuth } from './hooks/auth';
 
 import { PrivateRoute } from './routes/PrivateRoute';
 
@@ -14,28 +14,36 @@ function App() : JSX.Element {
   const { auth } = useAuth();
 
   return (
-    <AuthProvider>
-      <Switch>
-        <Route
-          exact
-          path="/"
-          render={() => {
-              return (
-                auth?.token
-                ? <Redirect to="/quiz-form" />
-                : <Redirect to="/login" /> 
-              )
-          }}
-        />
-        <Route path="/login" exact component={ Login } />
-        <Route path="/password-reset" component={ ResetPassword } />
-        <Route path="/forgot-password" component={ ForgotPassword } />
-        <PrivateRoute path="/quiz-form">
-          <QuizForm />
-        </PrivateRoute>
-      </Switch>
-      <GlobalStyle />
-    </AuthProvider>
+    auth.rehydrated
+    ? (
+      <>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => {
+                return (
+                  auth.token
+                  ? <Redirect to="/quiz-form" />
+                  : <Redirect to="/login" /> 
+                )
+            }}
+          />
+          <Route path="/login" exact component={ Login } />
+          <Route path="/password-reset/:token" component={ ResetPassword } />
+          <Route path="/forgot-password" component={ ForgotPassword } />
+          <PrivateRoute path="/quiz-form">
+            <QuizForm />
+          </PrivateRoute>
+
+          <Route>
+            <Redirect to="/" />
+          </Route>
+        </Switch>
+        <GlobalStyle />
+      </>
+    )
+    : <h1>Loading</h1>
   );
 }
 

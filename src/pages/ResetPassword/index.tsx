@@ -3,15 +3,18 @@ import { LandingPageLayout } from '../../components/LandingPageLayout';
 import { Link } from 'react-router-dom';
 // , useParams
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useAuth } from '../../hooks/auth';
+import { api } from '../../services/api';
 
 import { Form } from './styles';
 
 type Inputs = {
-  newPassword: string;
-  confirmPassword: string;
+  password: string;
+  confirm: string;
 };
 
 export function ResetPassword() : JSX.Element {
+  const { updateAuth } = useAuth();
   // const { token } = useParams();
 
   const {
@@ -23,13 +26,13 @@ export function ResetPassword() : JSX.Element {
   
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
-    // const resetPasswordData = {
-    //   token,
-    //   newPassword: data.newPassword,
-    // }
     // try {
-    //   const { data } = await axios.post('resetPasswordLink', resetPasswordData);
-    //   setStore(prevState => ({...prevState, auth: data}));
+    //   const { data } = await api.post('/reset_password', { password: data.password }, {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`
+    //   }
+    // });
+    //   updateAuth(token);
     // } catch (error) { console.log(error) }
   }; 
 
@@ -43,23 +46,23 @@ export function ResetPassword() : JSX.Element {
           <label>Nova senha</label>
           <input
             type="password"
-            {...register("newPassword", {
+            {...register("password", {
               required: { value: true, message: 'Este campo é obrigatório' },
             })}
             />
-          {errors.newPassword && <span>{errors.newPassword.message}</span>}
+          {errors.password && <span>{errors.password.message}</span>}
         </div>
 
         <div>
           <label>Confirmação nova senha</label>
           <input
             type="password"
-            {...register("confirmPassword", {
+            {...register("confirm", {
               required: { value: true, message: 'Este campo é obrigatório'},
-              validate: (confirmPassword) => confirmPassword === getValues('newPassword') || 'Senhas não coincidem',
+              validate: (confirm) => confirm === getValues('password') || 'Senhas não coincidem',
             })}
             />
-          {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
+          {errors.confirm && <span>{errors.confirm.message}</span>}
         </div>
 
         <div>
