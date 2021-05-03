@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Aside, Quiz, AsideBordersDesign, AsideContainer } from './styles';
 import { TextInput } from '../../components/TextInput';
+import { FactOrFakeQuestion } from '../../components/FactOrFakeQuestion';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
@@ -16,6 +17,7 @@ type Inputs = {
 export function QuizForm() : JSX.Element {
   const {updateAuth} = useAuth();
   const history = useHistory();
+  const NUMBER_OF_QUESTIONS : string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
   const {
     register,
@@ -23,14 +25,15 @@ export function QuizForm() : JSX.Element {
     formState: { errors }
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = async (user) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data ) => {
+    console.log(data)
     try {
-      const { data } = await api.post('/authenticate', user, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      updateAuth(data.token);
+      // const { data } = await api.post('/authenticate', user, {
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
+      // updateAuth(data.token);
       history.push('/');
     } catch (error) { console.log(error) }
   }; 
@@ -48,7 +51,7 @@ export function QuizForm() : JSX.Element {
           </div>
         </AsideBordersDesign>
       </Aside>
-      <Quiz>
+      <Quiz onSubmit={handleSubmit(onSubmit)}>
         <section>
           <h1>Sobre o quiz</h1>
           <div>
@@ -73,6 +76,9 @@ export function QuizForm() : JSX.Element {
         <div className="hr"/>
         <section>
           <h1>Quiz</h1>
+          {NUMBER_OF_QUESTIONS.map((index) => (
+            <FactOrFakeQuestion key={index} index={ index } register={register} />
+          ))}
         </section>
         <div className="buttons">
           <button type="button">Cancelar</button>

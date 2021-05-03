@@ -66,15 +66,17 @@ export const AsideBordersDesign = styled.section`
   }
 `;
 
-export const Quiz = styled.section`
+export const Quiz = styled.form`
   background-color: var(--shape);
   max-width: 91.875rem;
-  height: 90vh;
+  height: 100%;
   border-radius: 10px;
   margin-left: 24.5rem;
   padding: 3.375rem 4rem 4rem 7rem;
 
   section:first-child {
+    padding: 0 2.3125rem;
+  
     h1 {
       margin: 0 0 3.125rem 0.9rem;
     }
@@ -84,7 +86,7 @@ export const Quiz = styled.section`
       grid-template-columns: minmax(200px, 3fr) minmax(200px, 1fr);
       gap: 3.75rem;
 
-      @media (max-width: 1000px) {
+      @media (max-width: 1080px) {
         display: block;
       }
 
@@ -131,9 +133,8 @@ export const Quiz = styled.section`
 
   section {
     h1 {
-      margin: 3.125rem 0.9rem;
+      margin: 3.125rem 3.2125rem 1.625rem;
     }
-
   }
 
   div.buttons {
