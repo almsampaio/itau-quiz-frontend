@@ -42,14 +42,12 @@ export function QuizForm() : JSX.Element {
           {
             name: 'Fato',
             text: data[`fact-${index}`],
-            //is_response: data[`answer-${index}`] === 'Fato',
-            is_response: true,
+            is_response: data[`radio-${index}`] === 'fact',
           },
           {
             name: 'Fake',
             text: data[`fake-${index}`],
-            //is_response: data[`answer-${index}`] === 'Fake',
-            is_response: false,
+            is_response: data[`radio-${index}`] === 'fake',
           }
         ]
       }))
