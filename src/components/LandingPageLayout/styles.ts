@@ -9,13 +9,15 @@ export const Container = styled.div`
 `;
 
 export const SubContainer = styled.div`
-  width: 80rem;
+  width: 90rem;
+  margin-right: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
 export const Hero = styled.div`
+  margin-left: 8rem;
   display: flex;
   align-items: center;
   position: relative;
