@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LandingPageLayout } from '../../components/LandingPageLayout';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
+import { Loading } from '../../components/Loading';
 
 import { Form } from './styles';
 
@@ -15,6 +16,7 @@ type Inputs = {
 export function Login() : JSX.Element {
   const {updateAuth} = useAuth();
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -23,6 +25,7 @@ export function Login() : JSX.Element {
   } = useForm<Inputs>();
   
   const onSubmit: SubmitHandler<Inputs> = async (user) => {
+    setIsLoading(true);
     try {
       const { data } = await api.post('/authenticate', user, {
         headers: {
@@ -31,13 +34,18 @@ export function Login() : JSX.Element {
       });
       updateAuth(data.token);
       history.push('/');
-    } catch (error) { console.log(error) }
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error)
+    }
   }; 
 
-  console.log('login page')
   return (
     <LandingPageLayout>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      {isLoading
+        ? <Loading color="orange" />
+        : (
+        <Form onSubmit={handleSubmit(onSubmit)}>
         <h1>Quizes</h1>
         <p>Entrar na plataforma</p>
         
@@ -50,7 +58,6 @@ export function Login() : JSX.Element {
             })}
             />
           {errors.email && <span>{errors.email.message}</span>}
-          {console.log(register)}
         </div>
 
         <div>
@@ -65,10 +72,10 @@ export function Login() : JSX.Element {
         </div>
 
         <div>
-          <input type="submit" value="Entrar" />
+          <button type="submit">Entrar</button>
           <Link to="/forgot-password">Esqueci minha senha</Link>
         </div>
-      </Form>
+      </Form>)}
     </LandingPageLayout>
   );
 }

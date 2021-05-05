@@ -1,22 +1,26 @@
-import React from 'react';
-import { Container, Aside, Quiz, AsideBordersDesign, AsideContainer } from './styles';
+import React, { useEffect, useState } from 'react';
+import { QuizPageLayout } from '../../components/QuizPageLayout';
 import { TextInput } from '../../components/TextInput';
 import { FactOrFakeQuestion } from '../../components/FactOrFakeQuestion';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
-
-import logoImg from '../../assets/logo.svg';
 import { useHistory } from 'react-router-dom';
 
+import { Quiz, LoadingContainer } from './styles';
+import { Loading } from '../../components/Loading';
+
 type Inputs = {
+  type_quiz_id: number;
   title: string;
   password: string;
 };
 
 export function QuizForm() : JSX.Element {
-  const {updateAuth} = useAuth();
+  const [quizTypes, setQuizTypes] = useState([]);
+  const { auth, updateAuth } = useAuth();
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
   const NUMBER_OF_QUESTIONS : string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
   const {
@@ -25,32 +29,82 @@ export function QuizForm() : JSX.Element {
     formState: { errors }
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data ) => {
-    console.log(data)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onSubmit: SubmitHandler<Inputs> = async (data: any) => {
+    console.log(data);
+    setIsLoading(true);
+    const requestBody = {
+      type_quiz_id: data.type_quiz_id,
+      name: data.title,
+      questions: NUMBER_OF_QUESTIONS.map((index) => ({
+        position: Number(index),
+        text: data[`question-${index}`],
+        alternatives: [
+          {
+            name: 'Fato',
+            text: data[`fact-${index}`],
+            //is_response: data[`answer-${index}`] === 'Fato',
+            is_response: true,
+          },
+          {
+            name: 'Fake',
+            text: data[`fake-${index}`],
+            //is_response: data[`answer-${index}`] === 'Fake',
+            is_response: false,
+          }
+        ]
+      }))
+    };
+    const dataTransfer = new ClipboardEvent('').clipboardData || new DataTransfer();
+    NUMBER_OF_QUESTIONS.forEach((index) => {
+      console.log(data[index].length)
+      data[index].length && dataTransfer.items.add(data[index]['0']);
+    });
+    console.log(dataTransfer);
+    const formData = new FormData();
+    formData.append('quiz', JSON.stringify(requestBody))
+    formData.append('files', JSON.stringify(dataTransfer.files));
+    console.log(formData);
     try {
-      // const { data } = await api.post('/authenticate', user, {
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // });
-      // updateAuth(data.token);
-      history.push('/');
-    } catch (error) { console.log(error) }
-  }; 
+      const response = await api.post('/complete_quiz', formData, {
+        headers: {
+          'Authorization': `Bearer ${auth.token}`,
+          'Content-Type': 'multipart/form-data'
+        },
+      });
+      console.log(response)
+      // history.push(`/quiz-download/${data.id}`);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getQuizTypes();
+  }, []);
+
+  async function getQuizTypes () {
+    try {
+      const { data } = await api.get('/type_quiz', {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        }
+      });
+      setQuizTypes(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function logout() {
+    updateAuth('');
+    history.push('/');
+  }
 
   return (
-    <Container>
-      <Aside>
-        <img src={ logoImg } alt="Itaú"/>
-        <AsideBordersDesign>
-          <div className="blue-shadow" />
-          <div className="blue-border">
-            <AsideContainer>
-              <h1>Quizes</h1>
-            </AsideContainer>
-          </div>
-        </AsideBordersDesign>
-      </Aside>
+    <QuizPageLayout>
       <Quiz onSubmit={handleSubmit(onSubmit)}>
         <section>
           <h1>Sobre o quiz</h1>
@@ -66,9 +120,16 @@ export function QuizForm() : JSX.Element {
             />
             <div>
               <label>Tipo de Quiz</label>
-              <select name="" defaultValue="">
+              <select
+                {...register("type_quiz_id", {
+                  required: { value: true, message: 'Este campo é obrigatório'}
+                })}
+                defaultValue=""
+              >
                 <option value="" disabled hidden>Selecione</option>
-                <option value="">Fato ou Fake</option>
+                {quizTypes.map(({id, name}) => (
+                  <option key={name} value={id}>{name}</option>
+                ))}
               </select>
             </div>
           </div>
@@ -81,10 +142,18 @@ export function QuizForm() : JSX.Element {
           ))}
         </section>
         <div className="buttons">
-          <button type="button">Cancelar</button>
-          <button type="submit">Criar Quiz</button>
+          <button type="button" onClick={logout}>Cancelar</button>
+          <button type="submit">
+            Criar Quiz
+            {isLoading
+                ? (
+                <LoadingContainer>
+                  <Loading color="orange" />
+                </LoadingContainer>)
+                : null}
+          </button>
         </div>
       </Quiz>
-    </Container>
+    </QuizPageLayout>
   );
 }
