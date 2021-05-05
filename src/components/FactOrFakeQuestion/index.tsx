@@ -18,7 +18,7 @@ export function FactOrFakeQuestion({index, register, errors} : FactOrFakeQuestio
   const question = `question-${index}`;
   const factText = `fact-${index}`;
   const fakeText = `fake-${index}`;
-  const fileInput = `file-${index}`;
+  const fileInput = index;
 
   return (
       <Container>
@@ -74,6 +74,7 @@ export function FactOrFakeQuestion({index, register, errors} : FactOrFakeQuestio
           type="file"
           register={register(fileInput)}
           label="Adicionar ícone"
+          accept="image/*"
           id={fileInput}
           error={errors && errors[fileInput]}
           placeholder="Upload"
