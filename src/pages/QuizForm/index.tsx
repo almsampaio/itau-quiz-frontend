@@ -31,49 +31,57 @@ export function QuizForm() : JSX.Element {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit: SubmitHandler<Inputs> = async (data: any) => {
-    console.log(data);
     setIsLoading(true);
     const requestBody = {
       type_quiz_id: data.type_quiz_id,
       name: data.title,
-      questions: NUMBER_OF_QUESTIONS.map((index) => ({
-        position: Number(index),
-        text: data[`question-${index}`],
-        alternatives: [
-          {
-            name: 'Fato',
-            text: data[`fact-${index}`],
-            //is_response: data[`answer-${index}`] === 'Fato',
-            is_response: true,
-          },
-          {
-            name: 'Fake',
-            text: data[`fake-${index}`],
-            //is_response: data[`answer-${index}`] === 'Fake',
-            is_response: false,
-          }
-        ]
-      }))
+      questions: NUMBER_OF_QUESTIONS.map((index) => {
+        const questionData = {
+          position: Number(index),
+          text: data[`question-${index}`],
+          alternatives: [
+            {
+              name: 'Fato',
+              text: data[`fact-${index}`],
+              is_response: data[`radio-${index}`] === 'fact',
+            },
+            {
+              name: 'Fake',
+              text: data[`fake-${index}`],
+              is_response: data[`radio-${index}`] === 'fake',
+            }
+          ]
+        };
+
+        if (
+          data[`question-${index}`] !== ''
+          && data[`fact-${index}`] !== ''
+          && data[`fake-${index}`] !== ''
+        ) return questionData;
+        
+        return null;
+      }).filter((isNull) => isNull),
     };
-    const dataTransfer = new ClipboardEvent('').clipboardData || new DataTransfer();
-    NUMBER_OF_QUESTIONS.forEach((index) => {
-      console.log(data[index].length)
-      data[index].length && dataTransfer.items.add(data[index]['0']);
-    });
-    console.log(dataTransfer);
     const formData = new FormData();
-    formData.append('quiz', JSON.stringify(requestBody))
-    formData.append('files', JSON.stringify(dataTransfer.files));
-    console.log(formData);
+    formData.append('quiz', JSON.stringify(requestBody));
+
+    const dataTransfer = new ClipboardEvent('').clipboardData || new DataTransfer();
+    let counter = 0;
+    NUMBER_OF_QUESTIONS.forEach((index) => {
+      if (data[index].length) {
+        dataTransfer.items.add(data[index]['0'])
+        formData.append(index, dataTransfer.files[counter]);
+        counter += 1;
+      }
+    });  
     try {
-      const response = await api.post('/complete_quiz', formData, {
+      const { data } = await api.post('/complete_quiz', formData, {
         headers: {
           'Authorization': `Bearer ${auth.token}`,
           'Content-Type': 'multipart/form-data'
         },
       });
-      console.log(response)
-      // history.push(`/quiz-download/${data.id}`);
+      history.push(`/quiz-download/${data.id}`);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
