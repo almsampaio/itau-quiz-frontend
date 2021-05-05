@@ -35,22 +35,32 @@ export function QuizForm() : JSX.Element {
     const requestBody = {
       type_quiz_id: data.type_quiz_id,
       name: data.title,
-      questions: NUMBER_OF_QUESTIONS.map((index) => ({
-        position: Number(index),
-        text: data[`question-${index}`],
-        alternatives: [
-          {
-            name: 'Fato',
-            text: data[`fact-${index}`],
-            is_response: data[`radio-${index}`] === 'fact',
-          },
-          {
-            name: 'Fake',
-            text: data[`fake-${index}`],
-            is_response: data[`radio-${index}`] === 'fake',
-          }
-        ]
-      }))
+      questions: NUMBER_OF_QUESTIONS.map((index) => {
+        const questionData = {
+          position: Number(index),
+          text: data[`question-${index}`],
+          alternatives: [
+            {
+              name: 'Fato',
+              text: data[`fact-${index}`],
+              is_response: data[`radio-${index}`] === 'fact',
+            },
+            {
+              name: 'Fake',
+              text: data[`fake-${index}`],
+              is_response: data[`radio-${index}`] === 'fake',
+            }
+          ]
+        };
+
+        if (
+          data[`question-${index}`] !== ''
+          && data[`fact-${index}`] !== ''
+          && data[`fake-${index}`] !== ''
+        ) return questionData;
+        
+        return null;
+      }).filter((isNull) => isNull),
     };
     const formData = new FormData();
     formData.append('quiz', JSON.stringify(requestBody));

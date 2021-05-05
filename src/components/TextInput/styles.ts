@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const InputContainer = styled.div`
+  position: relative;
   label {
     display: block;
     width: 23rem;

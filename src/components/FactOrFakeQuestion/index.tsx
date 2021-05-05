@@ -30,7 +30,7 @@ export function FactOrFakeQuestion({index, register, errors} : FactOrFakeQuestio
             <p>{ index.padStart(2, '0') }</p>
             <TextInput
               register={register(question, {
-                required: { value: true, message: 'Este campo é obrigatório' },
+                required: { value: (index === '1' ? true : false), message: 'Este campo é obrigatório' },
               } )}
               label="Pergunta"
               id={question}
@@ -84,7 +84,7 @@ export function FactOrFakeQuestion({index, register, errors} : FactOrFakeQuestio
               <p>Texto complementar</p>
               <TextInput
                 register={register(factText, {
-                  required: { value: true, message: 'Este campo é obrigatório' },
+                  required: { value: (index === '1' ? true : false), message: 'Este campo é obrigatório' },
                 } )}
                 id={factText}
                 error={errors && errors[factText]}
@@ -92,7 +92,7 @@ export function FactOrFakeQuestion({index, register, errors} : FactOrFakeQuestio
               />
               <TextInput
                 register={register(fakeText, {
-                  required: { value: true, message: 'Este campo é obrigatório' },
+                  required: { value: (index === '1' ? true : false), message: 'Este campo é obrigatório' },
                 } )}
                 id={fakeText}
                 error={errors ? errors[fakeText] : null}

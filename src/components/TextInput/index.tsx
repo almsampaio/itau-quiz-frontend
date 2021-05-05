@@ -1,8 +1,6 @@
 import React from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
-import uploadImg from '../../assets/upload.png';
-
 import { InputContainer } from './styles';
 
 export interface TextInputProps {
