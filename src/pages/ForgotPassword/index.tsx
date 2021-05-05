@@ -4,6 +4,7 @@ import { Loading } from '../../components/Loading';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { api } from '../../services/api';
+import { TextInput } from '../../components/TextInput';
 
 import { Form } from './styles';
 
@@ -41,16 +42,15 @@ export function ForgotPassword() : JSX.Element {
         <h1>Quizes</h1>
         <p>Redefinir senha</p>
         
-        <div>
-          <label>E-mail</label>
-          <input
-            {...register("email", {
+        <TextInput
+            register={register("email", {
               required: { value: true, message: 'Este campo é obrigatório' },
               pattern: { value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, message: 'E-mail inválido' },
             })}
-            />
-          {errors.email && <span>{errors.email.message}</span>}
-        </div>
+            label="E-mail"
+            id="email"
+            error={errors.email}
+        />
 
         <p className="password-instructions">Informe o e-mail para o qual você deseja redefinir a senha.</p>
 

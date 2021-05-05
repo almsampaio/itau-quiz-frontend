@@ -73,12 +73,12 @@ export const OptionsAndDescriptions = styled.div`
   }
 
   div.options {
-    div {
-      width: fit-content;
+    label {
+      max-width: 3rem;
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: left;
+      justify-content: center;
       padding: 1rem;
       background-color: var(--input-background);
       border-radius: 6px;
@@ -95,6 +95,19 @@ export const OptionsAndDescriptions = styled.div`
 
     input {
       margin: 0;
+    }
+  }
+`;
+
+export const RadioBox = styled.label`
+  img {
+    display: none;
+    width: 2rem;
+  }
+
+  &.active {
+    img {
+      display: block;
     }
   }
 `;

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import React from 'react';
+import React, { useState } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
-
 import { TextInput } from '../TextInput';
+import checkmarkImg from '../../assets/checkmark.svg';
 
-import { Container, IndexAndQuestion, OptionsAndDescriptions } from './styles';
+import { Container, IndexAndQuestion, OptionsAndDescriptions, RadioBox } from './styles';
 
 interface FactOrFakeQuestionProps {
   index: string;
@@ -15,9 +15,12 @@ interface FactOrFakeQuestionProps {
 }
 
 export function FactOrFakeQuestion({index, register, errors} : FactOrFakeQuestionProps ) : JSX.Element {
+  const [answer, setAnswer] = useState('fact');
+
   const question = `question-${index}`;
   const factText = `fact-${index}`;
   const fakeText = `fake-${index}`;
+  const radiobox = `radio-${index}`;
   const fileInput = index;
 
   return (
@@ -27,7 +30,7 @@ export function FactOrFakeQuestion({index, register, errors} : FactOrFakeQuestio
             <p>{ index.padStart(2, '0') }</p>
             <TextInput
               register={register(question, {
-                required: { value: true, message: 'Este campo é obrigatório' },
+                required: { value: (index === '1' ? true : false), message: 'Este campo é obrigatório' },
               } )}
               label="Pergunta"
               id={question}
@@ -44,15 +47,44 @@ export function FactOrFakeQuestion({index, register, errors} : FactOrFakeQuestio
 
             <div className="options">
               <p>Resposta</p>
-              <div>V</div>
-              <div>F</div>
+              <RadioBox
+                className={answer === 'fact' ? 'active' : ''}
+                id={`${radiobox}-fact`}
+                onClick={ () => { setAnswer('fact'); } }
+                isActive={ answer === 'fact' }
+              >
+                <img src={ checkmarkImg } alt="Marcado"/>
+                <input
+                  value="fact"
+                  type="radio"
+                  {...register(radiobox)}
+                  id={`${radiobox}-fact`}
+                  hidden
+                  checked
+                />
+              </RadioBox>
+              <RadioBox
+                className={answer === 'fake' ? 'active' : ''}
+                id={`${radiobox}-fake`}
+                onClick={ () => { setAnswer('fake'); } }
+                isActive={ answer === 'fake' }
+              >
+                <img src={ checkmarkImg } alt="Marcado"/>
+                <input
+                  value="fake"
+                  type="radio"
+                  {...register(radiobox)}
+                  id={`${radiobox}-fake`}
+                  hidden
+                />
+              </RadioBox>
             </div>
 
             <div className="feedbacks">
               <p>Texto complementar</p>
               <TextInput
                 register={register(factText, {
-                  required: { value: true, message: 'Este campo é obrigatório' },
+                  required: { value: (index === '1' ? true : false), message: 'Este campo é obrigatório' },
                 } )}
                 id={factText}
                 error={errors && errors[factText]}
@@ -60,7 +92,7 @@ export function FactOrFakeQuestion({index, register, errors} : FactOrFakeQuestio
               />
               <TextInput
                 register={register(fakeText, {
-                  required: { value: true, message: 'Este campo é obrigatório' },
+                  required: { value: (index === '1' ? true : false), message: 'Este campo é obrigatório' },
                 } )}
                 id={fakeText}
                 error={errors ? errors[fakeText] : null}
