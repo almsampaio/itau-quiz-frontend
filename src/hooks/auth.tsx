@@ -1,5 +1,6 @@
 import React from 'react';
 import { ReactNode, createContext, useState, useContext, useEffect } from 'react';
+import { api } from '../services/api';
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType );
 
@@ -28,13 +29,34 @@ export function AuthProvider({ children }: AuthProviderProps) : JSX.Element {
     rehydrated: false,
   });
 
-  function rehydrate() {
-    const data = localStorage.getItem('auth');
-    data && setAuth(prevState => ({
-      ...prevState,
-      token: JSON.parse(data),
-      rehydrated: true,
+  async function rehydrate() {
+    const tokenJSON = localStorage.getItem('auth');
+    if (tokenJSON) {
+      const token = JSON.parse(tokenJSON);
+      try {
+        await api.get('/type_quiz', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        })
+        setAuth(prevState => ({
+          ...prevState,
+          token,
+          rehydrated: true,
+        }));
+      } catch (error) {
+        setAuth(prevState => ({
+          ...prevState,
+          rehydrated: true,
+        }));
+        console.log(error.message)
+      }
+    } else {
+      setAuth(prevState => ({
+        ...prevState,
+        rehydrated: true,
       }));
+    }
   }
   
   useEffect(() => {
