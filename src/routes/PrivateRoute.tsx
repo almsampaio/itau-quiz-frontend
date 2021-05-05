@@ -12,28 +12,24 @@ export function PrivateRoute({ children, path }: PrivateRouteProps) : JSX.Elemen
   const { auth } = useAuth();
 
   return (
-    auth.rehydrated
-    ? (
-      <Route
-        path={path}
-        render={({ location }: RouteComponentProps ) => {
-          return (
-            auth.token
-            ? (
-              children
-            )
-            : (
-              <Redirect
-                to={{
-                    pathname: "/login",
-                    state: { from: location }
-                }}
-              />
-            ))}
-        }
-      />
-    )
-    : <h1>Loading</h1>
-    );
+    <Route
+      path={path}
+      render={({ location }: RouteComponentProps ) => {
+        return (
+          auth.token
+          ? (
+            children
+          )
+          : (
+            <Redirect
+              to={{
+                  pathname: "/login",
+                  state: { from: location }
+              }}
+            />
+          ))}
+      }
+    />
+  );
 }
           
