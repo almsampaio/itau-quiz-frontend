@@ -12,6 +12,8 @@ export const GlobalStyle = createGlobalStyle`
     --input-border: #CED1D69A;
     --input-focus: #FF97384D;
     --input-text: #676A79;
+
+    --yellow-border: #FDED0B;
   }
   
   * {
@@ -23,6 +25,10 @@ export const GlobalStyle = createGlobalStyle`
   html {
     @media (max-width: 1200px) {
       font-size: 87.5%;
+    }
+
+    @media (max-width: 1100px) {
+      font-size: 0.75rem;
     }
   }
 

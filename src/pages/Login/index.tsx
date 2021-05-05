@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LandingPageLayout } from '../../components/LandingPageLayout';
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
+import { Loading } from '../../components/Loading';
 
 import { Form } from './styles';
 
@@ -14,6 +15,8 @@ type Inputs = {
 
 export function Login() : JSX.Element {
   const {updateAuth} = useAuth();
+  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -22,19 +25,27 @@ export function Login() : JSX.Element {
   } = useForm<Inputs>();
   
   const onSubmit: SubmitHandler<Inputs> = async (user) => {
-    console.log(user, 'user');
+    setIsLoading(true);
     try {
-      const response = await api.post('authenticate', { user });
-      console.log(response);
-      // const { token } = await axios.post('/authenticate', { user });
-      // updateAuth(token);
-    } catch (error) { console.log(error) }
+      const { data } = await api.post('/authenticate', user, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      updateAuth(data.token);
+      history.push('/');
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error)
+    }
   }; 
 
-  console.log('login page')
   return (
     <LandingPageLayout>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      {isLoading
+        ? <Loading color="orange" />
+        : (
+        <Form onSubmit={handleSubmit(onSubmit)}>
         <h1>Quizes</h1>
         <p>Entrar na plataforma</p>
         
@@ -61,10 +72,10 @@ export function Login() : JSX.Element {
         </div>
 
         <div>
-          <input type="submit" value="Entrar" />
+          <button type="submit">Entrar</button>
           <Link to="/forgot-password">Esqueci minha senha</Link>
         </div>
-      </Form>
+      </Form>)}
     </LandingPageLayout>
   );
 }

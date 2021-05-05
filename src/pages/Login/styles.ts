@@ -52,7 +52,8 @@ export const Form = styled.form`
       margin-top: 1.25rem;
     }
 
-    input[type="submit"] {
+    button[type="submit"] {
+      border-radius: 6px;
       padding: 0.8rem;
       cursor: pointer;
       width: 12.5rem;
@@ -60,7 +61,9 @@ export const Form = styled.form`
       background-color: var(--primary-color);
       color: var(--shape);
       font-size: 1.25rem;
-      margin-bottom: 0.8rem;
+      margin: 0.6rem 0 0.8rem 0;
+      font-weight: 600;
+      letter-spacing: 0.01rem;
     }
 
     a {

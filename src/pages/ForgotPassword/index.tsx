@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LandingPageLayout } from '../../components/LandingPageLayout';
-import { Link } from 'react-router-dom';
+import { Loading } from '../../components/Loading';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm, SubmitHandler } from "react-hook-form";
+import { api } from '../../services/api';
 
 import { Form } from './styles';
 
@@ -10,6 +12,8 @@ type Inputs = {
 };
 
 export function ForgotPassword() : JSX.Element {
+  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -18,16 +22,22 @@ export function ForgotPassword() : JSX.Element {
   } = useForm<Inputs>();
   
   const onSubmit: SubmitHandler<Inputs> = async (email) => {
-    console.log(email);
-    // try {
-    //   const { data } = await axios.post('loginLink', { user });
-    //   setStore(prevState => ({...prevState, auth: data}));
-    // } catch (error) { console.log(error) }
+    setIsLoading(true);
+    try {
+      await api.post('/forgot_password', email);
+      history.push('/');
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error)
+    }
   }; 
 
   return (
     <LandingPageLayout>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      {isLoading
+        ? <Loading color="orange" />
+        : (
+        <Form onSubmit={handleSubmit(onSubmit)}>
         <h1>Quizes</h1>
         <p>Redefinir senha</p>
         
@@ -48,7 +58,7 @@ export function ForgotPassword() : JSX.Element {
           <input type="submit" value="Enviar" />
           <Link to="/login">Voltar para login</Link>
         </div>
-      </Form>
+      </Form>)}
     </LandingPageLayout>
   );
 }
