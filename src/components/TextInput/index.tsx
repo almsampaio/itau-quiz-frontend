@@ -1,6 +1,8 @@
 import React from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
+import uploadImg from '../../assets/upload.png';
+
 import { InputContainer } from './styles';
 
 export interface TextInputProps {
@@ -16,7 +18,7 @@ export interface TextInputProps {
 
 export function TextInput({ register, error, label, id, type, placeholder, className, accept }: TextInputProps) : JSX.Element {
   return (
-      <InputContainer className={className}>
+      <InputContainer className={`${className} ${type==='file' ? 'file-input' : ''}`}>
         <label htmlFor={id}>{label}</label>
         <input
           {...register}
