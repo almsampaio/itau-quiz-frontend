@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
 import { Loading } from '../../components/Loading';
+import { TextInput } from '../../components/TextInput';
 
 import { Form } from './styles';
 
@@ -49,27 +50,25 @@ export function Login() : JSX.Element {
         <h1>Quizes</h1>
         <p>Entrar na plataforma</p>
         
-        <div>
-          <label>E-mail</label>
-          <input
-            {...register("email", {
+        <TextInput
+            register={register("email", {
               required: { value: true, message: 'Este campo é obrigatório' },
-              pattern: { value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, message: 'E-mail inválido'},
+              pattern: { value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, message: 'E-mail inválido' },
             })}
-            />
-          {errors.email && <span>{errors.email.message}</span>}
-        </div>
+            label="E-mail"
+            id="email"
+            error={errors.email}
+        />
 
-        <div>
-          <label>Senha</label>
-          <input
-            type="password"
-            {...register("password", {
+        <TextInput
+            register={register("password", {
               required: { value: true, message: 'Este campo é obrigatório' },
             })}
-            />
-          {errors.password && <span>{errors.password.message}</span>}
-        </div>
+            type="password"
+            label="Senha"
+            id="password"
+            error={errors.password}
+        />
 
         <div>
           <button type="submit">Entrar</button>
