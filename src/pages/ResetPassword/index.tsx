@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LandingPageLayout } from '../../components/LandingPageLayout';
+import { TextInput } from '../../components/TextInput';
 import { Loading } from '../../components/Loading';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -50,29 +51,27 @@ export function ResetPassword() : JSX.Element {
         <Form onSubmit={handleSubmit(onSubmit)}>
         <h1>Quizes</h1>
         <p>Redefinir senha</p>
-        
-        <div>
-          <label>Nova senha</label>
-          <input
-            type="password"
-            {...register("password", {
+
+        <TextInput
+            register={register("password", {
               required: { value: true, message: 'Este campo é obrigatório' },
             })}
-            />
-          {errors.password && <span>{errors.password.message}</span>}
-        </div>
-
-        <div>
-          <label>Confirmação nova senha</label>
-          <input
             type="password"
-            {...register("confirm", {
-              required: { value: true, message: 'Este campo é obrigatório'},
+            label="Nova senha"
+            id="password"
+            error={errors.password}
+        />
+
+        <TextInput
+            register={register("confirm", {
+              required: { value: true, message: 'Este campo é obrigatório' },
               validate: (confirm) => confirm === getValues('password') || 'Senhas não coincidem',
             })}
-            />
-          {errors.confirm && <span>{errors.confirm.message}</span>}
-        </div>
+            type="password"
+            label="Confirmação nova senha"
+            id="confirm"
+            error={errors.confirm}
+        />
 
         <div>
           <input type="submit" value="Entrar" />
