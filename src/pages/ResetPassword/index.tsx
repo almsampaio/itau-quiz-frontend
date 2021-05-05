@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LandingPageLayout } from '../../components/LandingPageLayout';
-import { Link } from 'react-router-dom';
-// , useParams
+import { Loading } from '../../components/Loading';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
@@ -15,7 +15,9 @@ type Inputs = {
 
 export function ResetPassword() : JSX.Element {
   const { updateAuth } = useAuth();
-  // const { token } = useParams();
+  const history = useHistory();
+  const { token } = useParams<{ token: string }>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -25,20 +27,27 @@ export function ResetPassword() : JSX.Element {
   } = useForm<Inputs>();
   
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
-    // try {
-    //   const { data } = await api.post('/reset_password', { password: data.password }, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`
-    //   }
-    // });
-    //   updateAuth(token);
-    // } catch (error) { console.log(error) }
+    setIsLoading(true);
+    try {
+      await api.post('/reset_password', { password: data.password }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      updateAuth(token);
+      history.push('/');
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
   }; 
 
   return (
     <LandingPageLayout>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      {isLoading
+        ? <Loading color="orange" />
+        : (
+        <Form onSubmit={handleSubmit(onSubmit)}>
         <h1>Quizes</h1>
         <p>Redefinir senha</p>
         
@@ -69,7 +78,7 @@ export function ResetPassword() : JSX.Element {
           <input type="submit" value="Entrar" />
           <Link to="/login">Voltar para login</Link>
         </div>
-      </Form>
+      </Form>)}
     </LandingPageLayout>
   );
 }

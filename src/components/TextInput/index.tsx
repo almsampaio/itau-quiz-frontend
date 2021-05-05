@@ -5,6 +5,7 @@ import { InputContainer } from './styles';
 
 export interface TextInputProps {
   id: string;
+  accept?: string;
   label?: string;
   register: UseFormRegisterReturn;
   error?: FieldError;
@@ -13,12 +14,13 @@ export interface TextInputProps {
   className?: string;
 }
 
-export function TextInput({ register, error, label, id, type, placeholder, className }: TextInputProps) : JSX.Element {
+export function TextInput({ register, error, label, id, type, placeholder, className, accept }: TextInputProps) : JSX.Element {
   return (
       <InputContainer className={className}>
         <label htmlFor={id}>{label}</label>
         <input
           {...register}
+          accept={accept}
           id={id}
           type={type}
           placeholder={placeholder}
