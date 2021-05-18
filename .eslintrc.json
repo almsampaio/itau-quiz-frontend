@@ -65,7 +65,7 @@
                   // Packages. `react` related packages come first.
                   ["^react", "^@?\\w"],
                   // Internal packages.
-                  ["^(routes|hooks|pages|services|assets)(/.*|$)"],
+                  ["^(routes|contexts|pages|api|assets)(/.*|$)"],
                   // Components.
                   ["^components(/.*|$)"],
                   // Side effect imports.
