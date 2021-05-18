@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 
-import { useAuth } from 'hooks/auth';
-import { api } from 'services/api';
+import { api } from 'api/config';
+import { useAuth } from 'contexts/AuthContext';
 
 import { LandingPageLayout } from 'components/LandingPageLayout';
 import { Loading } from 'components/Loading';

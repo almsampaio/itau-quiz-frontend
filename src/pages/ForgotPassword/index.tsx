@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 
-import { api } from 'services/api';
+import { api } from 'api/config';
 
 import { LandingPageLayout } from 'components/LandingPageLayout';
 import { Loading } from 'components/Loading';

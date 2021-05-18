@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
+import { api } from 'api/config';
 import closeImg from 'assets/close.svg';
-import { useAuth } from 'hooks/auth';
-import { api } from 'services/api';
+import { useAuth } from 'contexts/AuthContext';
 
 import { Loading } from 'components/Loading';
 import { QuizPageLayout } from 'components/QuizPageLayout';

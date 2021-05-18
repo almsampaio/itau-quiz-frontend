@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
-import { useAuth } from 'hooks/auth';
-import { api } from 'services/api';
+import { api } from 'api/config';
+import { useAuth } from 'contexts/AuthContext';
 
 import { FactOrFakeQuestion } from 'components/FactOrFakeQuestion';
 import { Loading } from 'components/Loading';
