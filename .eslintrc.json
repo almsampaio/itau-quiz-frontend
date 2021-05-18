@@ -3,10 +3,18 @@
         "browser": true,
         "es2021": true
     },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "moduleDirectory": ["node_modules", "src"]
+            }
+        }
+    },
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -18,8 +26,60 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "unused-imports",
+        "react-hooks",
+        "simple-import-sort",
+        "import"
     ],
     "rules": {
-    }
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react/jsx-props-no-spreading": "off",
+        "import/prefer-default-export": "off",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react/react-in-jsx-scope": "off",
+        "no-unused-vars": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+                  "warn",
+                { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+            ],
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "simple-import-sort/imports": "warn",
+        "simple-import-sort/exports": "error",
+        "import/first": "error",
+        "import/newline-after-import": "error",
+        "import/no-duplicates": "error",
+        "prettier/prettier": "error"
+      },
+      "overrides": [
+        {
+          "files": ["src/**/*.tsx", "src/**/*.ts", "src/**/*.jsx", "src/**/*.js"],
+          "rules": {
+            "simple-import-sort/imports": [
+              "error",
+              {
+                "groups": [
+                  // Packages. `react` related packages come first.
+                  ["^react", "^@?\\w"],
+                  // Internal packages.
+                  ["^(routes|hooks|pages|services|assets)(/.*|$)"],
+                  // Components.
+                  ["^components(/.*|$)"],
+                  // Side effect imports.
+                  ["^\\u0000"],
+                  // Parent imports. Put `..` last.
+                  ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+                  // Other relative imports. Put same-folder imports and `.` last.
+                  ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+                  // Style imports.
+                  ["^styles(/.*|$)"]
+                ]
+              }
+            ]
+          }
+        }
+      ]
 }

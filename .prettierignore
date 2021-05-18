@@ -1,0 +1,15 @@
+node_modules
+build
+
+/.github
+/.vscode
+/public
+
+.eslintrc.json
+.prettierrc.json
+jsconfig.json
+
+README.md
+
+package.json
+yarn.lock
