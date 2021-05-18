@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { AuthProvider } from 'hooks/auth';
+import { AuthProvider } from 'contexts/AuthContext';
 
 import { GlobalStyle } from 'styles/global';
 
