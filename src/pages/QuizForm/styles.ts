@@ -10,7 +10,7 @@ export const Quiz = styled.form`
 
   section:first-child {
     padding: 0 2.3125rem;
-  
+
     h1 {
       margin: 0 0 3.125rem 0.9rem;
     }
@@ -32,7 +32,8 @@ export const Quiz = styled.form`
           font-size: 1.1rem;
         }
 
-        input, select {
+        input,
+        select {
           display: block;
           width: 100%;
           padding: 0.9rem;
@@ -55,7 +56,6 @@ export const Quiz = styled.form`
         }
       }
     }
-
   }
 
   div.hr {
@@ -88,7 +88,7 @@ export const Quiz = styled.form`
       border-radius: 6px;
       font-weight: 600;
 
-      &[type="submit"] {
+      &[type='submit'] {
         background-color: var(--primary-color);
         color: var(--shape);
         position: relative;

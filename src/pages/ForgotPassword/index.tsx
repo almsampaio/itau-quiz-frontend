@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { LandingPageLayout } from '../../components/LandingPageLayout';
-import { Loading } from '../../components/Loading';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
-import { useForm, SubmitHandler } from "react-hook-form";
-import { api } from '../../services/api';
-import { TextInput } from '../../components/TextInput';
+
+import { api } from 'services/api';
+
+import { LandingPageLayout } from 'components/LandingPageLayout';
+import { Loading } from 'components/Loading';
+import { TextInput } from 'components/TextInput';
 
 import { Form } from './styles';
 
@@ -12,16 +14,16 @@ type Inputs = {
   email: string;
 };
 
-export function ForgotPassword() : JSX.Element {
+export function ForgotPassword(): JSX.Element {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm<Inputs>();
-  
+
   const onSubmit: SubmitHandler<Inputs> = async (email) => {
     setIsLoading(true);
     try {
@@ -29,36 +31,42 @@ export function ForgotPassword() : JSX.Element {
       history.push('/');
     } catch (error) {
       setIsLoading(false);
-      console.log(error)
+      console.log(error);
     }
-  }; 
+  };
 
   return (
     <LandingPageLayout>
-      {isLoading
-        ? <Loading color="orange" />
-        : (
+      {isLoading ? (
+        <Loading color="orange" />
+      ) : (
         <Form onSubmit={handleSubmit(onSubmit)}>
-        <h1>Quizes</h1>
-        <p>Redefinir senha</p>
-        
-        <TextInput
-            register={register("email", {
+          <h1>Quizes</h1>
+          <p>Redefinir senha</p>
+
+          <TextInput
+            register={register('email', {
               required: { value: true, message: 'Este campo é obrigatório' },
-              pattern: { value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, message: 'E-mail inválido' },
+              pattern: {
+                value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                message: 'E-mail inválido',
+              },
             })}
             label="E-mail"
             id="email"
             error={errors.email}
-        />
+          />
 
-        <p className="password-instructions">Informe o e-mail para o qual você deseja redefinir a senha.</p>
+          <p className="password-instructions">
+            Informe o e-mail para o qual você deseja redefinir a senha.
+          </p>
 
-        <div>
-          <input type="submit" value="Enviar" />
-          <Link to="/login">Voltar para login</Link>
-        </div>
-      </Form>)}
+          <div>
+            <input type="submit" value="Enviar" />
+            <Link to="/login">Voltar para login</Link>
+          </div>
+        </Form>
+      )}
     </LandingPageLayout>
   );
 }

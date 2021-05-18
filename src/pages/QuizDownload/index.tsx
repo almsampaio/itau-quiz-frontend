@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { QuizPageLayout } from '../../components/QuizPageLayout';
-import { useHistory, Link, useParams } from 'react-router-dom';
-import { useAuth } from '../../hooks/auth';
-import { api } from '../../services/api';
+import { useState } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
 
-import closeImg from '../../assets/close.svg';
+import closeImg from 'assets/close.svg';
+import { useAuth } from 'hooks/auth';
+import { api } from 'services/api';
+
+import { Loading } from 'components/Loading';
+import { QuizPageLayout } from 'components/QuizPageLayout';
 
 import { Container, LoadingContainer } from './styles';
-import { Loading } from '../../components/Loading';
 
-export function QuizDownload () : JSX.Element {
+export function QuizDownload(): JSX.Element {
   const { auth, updateAuth } = useAuth();
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
@@ -23,11 +24,14 @@ export function QuizDownload () : JSX.Element {
           Authorization: `Bearer ${auth.token}`,
         },
         responseType: 'arraybuffer',
-      })
+      });
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `${id.padStart(2, '0')}._Quiz_Fato_ou_Fake.zip`);
+      link.setAttribute(
+        'download',
+        `${id.padStart(2, '0')}._Quiz_Fato_ou_Fake.zip`,
+      );
       document.body.appendChild(link);
       link.click();
       setIsLoading(false);
@@ -47,19 +51,18 @@ export function QuizDownload () : JSX.Element {
       <Container>
         <div>
           <button type="button" className="close-btn" onClick={logout}>
-            <img src={closeImg} alt="Fechar"/>
+            <img src={closeImg} alt="Fechar" />
           </button>
           <h1>Quiz feito com sucesso!</h1>
           <div className="buttons">
             <Link to="/quiz-form">Voltar para edição</Link>
-            <button type="button" className="download" onClick={ downloadQuiz }>
+            <button type="button" className="download" onClick={downloadQuiz}>
               Download de Quiz
-              {isLoading
-                ? (
+              {isLoading ? (
                 <LoadingContainer>
                   <Loading color="orange" />
-                </LoadingContainer>)
-                : null}
+                </LoadingContainer>
+              ) : null}
             </button>
           </div>
         </div>

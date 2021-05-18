@@ -33,15 +33,15 @@ export const Hero = styled.div`
     width: 15rem;
     height: 15rem;
     position: absolute;
-    transform: translate(-50%, 0%);  
+    transform: translate(-50%, 0%);
     z-index: 1;
   }
-  
+
   h1 {
     color: var(--shape);
     font-size: 6rem;
     padding-left: 11.5rem;
-    transform: translate(0%, -5%);  
+    transform: translate(0%, -5%);
     z-index: 2;
   }
 `;

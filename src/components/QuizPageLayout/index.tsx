@@ -1,17 +1,18 @@
-import React, { ReactNode } from 'react';
-import logoImg from '../../assets/logo.svg';
+import { ReactNode } from 'react';
 
-import { Container, Aside, AsideBordersDesign, AsideContainer } from './styles';
+import logoImg from 'assets/logo.svg';
+
+import { Aside, AsideBordersDesign, AsideContainer, Container } from './styles';
 
 interface QuizPageLayoutProps {
   children: ReactNode;
 }
 
-export function QuizPageLayout({children} : QuizPageLayoutProps) : JSX.Element {
+export function QuizPageLayout({ children }: QuizPageLayoutProps): JSX.Element {
   return (
     <Container>
       <Aside>
-        <img src={ logoImg } alt="Itaú"/>
+        <img src={logoImg} alt="Itaú" />
         <AsideBordersDesign>
           <div className="blue-shadow" />
           <div className="blue-border">

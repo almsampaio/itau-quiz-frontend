@@ -22,7 +22,7 @@ export const Container = styled.div`
       right: 0;
       border: none;
       background-color: transparent;
-      
+
       img {
         width: 2rem;
         margin: 1.5rem;
@@ -39,30 +39,31 @@ export const Container = styled.div`
     }
 
     div.buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2rem;
 
-    button, a {
-      text-decoration: none;
-      padding: 0.8rem 2rem;
-      cursor: pointer;
-      border: none;
-      background-color: var(--input-focus);
-      color: var(--text-body);
-      font-size: 1.25rem;
-      margin: 0 1.875rem;
-      border-radius: 6px;
-      font-weight: 600;
+      button,
+      a {
+        text-decoration: none;
+        padding: 0.8rem 2rem;
+        cursor: pointer;
+        border: none;
+        background-color: var(--input-focus);
+        color: var(--text-body);
+        font-size: 1.25rem;
+        margin: 0 1.875rem;
+        border-radius: 6px;
+        font-weight: 600;
 
-      &.download {
-        background-color: var(--primary-color);
-        color: var(--shape);
-        position: relative;
+        &.download {
+          background-color: var(--primary-color);
+          color: var(--shape);
+          position: relative;
+        }
       }
     }
-  }
   }
 `;
 

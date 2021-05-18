@@ -15,7 +15,7 @@ export const Aside = styled.aside`
   align-items: center;
   margin: 2.625rem 4.5rem;
 
-  img  {
+  img {
     width: 6.375rem;
     height: 6.375rem;
     margin-bottom: 5rem;
