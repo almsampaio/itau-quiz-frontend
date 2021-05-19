@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react';
 
-import { api } from 'api/config';
+import { getQuizTypes } from 'api/quiz';
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
@@ -40,11 +40,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     if (tokenJSON) {
       const token = JSON.parse(tokenJSON);
       try {
-        await api.get('/type_quiz', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        await getQuizTypes();
         setAuth((prevState) => ({
           ...prevState,
           token,

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 
-import { api } from 'api/config';
+import { requestPasswordReset } from 'api/user';
 
 import { LandingPageLayout } from 'components/LandingPageLayout';
 import { Loading } from 'components/Loading';
@@ -24,10 +24,10 @@ export function ForgotPassword(): JSX.Element {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = async (email) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
     try {
-      await api.post('/forgot_password', email);
+      await requestPasswordReset(data.email);
       history.push('/');
     } catch (error) {
       setIsLoading(false);

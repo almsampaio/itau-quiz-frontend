@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
-import { api } from 'api/config';
+import { getQuizFile } from 'api/quiz';
 import closeImg from 'assets/close.svg';
 import { useAuth } from 'contexts/AuthContext';
 
@@ -11,7 +11,7 @@ import { QuizPageLayout } from 'components/QuizPageLayout';
 import { Container, LoadingContainer } from './styles';
 
 export function QuizDownload(): JSX.Element {
-  const { auth, updateAuth } = useAuth();
+  const { updateAuth } = useAuth();
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
@@ -19,12 +19,7 @@ export function QuizDownload(): JSX.Element {
   async function downloadQuiz() {
     setIsLoading(true);
     try {
-      const { data } = await api.get(`/complete_quiz_file?quiz_id=${id}`, {
-        headers: {
-          Authorization: `Bearer ${auth.token}`,
-        },
-        responseType: 'arraybuffer',
-      });
+      const { data } = await getQuizFile(id);
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;

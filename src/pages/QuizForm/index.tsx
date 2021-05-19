@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
-import { api } from 'api/config';
+import { createNewQuiz, getQuizTypes } from 'api/quiz';
 import { useAuth } from 'contexts/AuthContext';
 
 import { FactOrFakeQuestion } from 'components/FactOrFakeQuestion';
@@ -20,7 +20,7 @@ type Inputs = {
 
 export function QuizForm(): JSX.Element {
   const [quizTypes, setQuizTypes] = useState([]);
-  const { auth, updateAuth } = useAuth();
+  const { updateAuth } = useAuth();
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const NUMBER_OF_QUESTIONS: string[] = [
@@ -90,12 +90,7 @@ export function QuizForm(): JSX.Element {
       }
     });
     try {
-      const { data } = await api.post('/complete_quiz', formData, {
-        headers: {
-          Authorization: `Bearer ${auth.token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const { data } = await createNewQuiz(formData);
       history.push(`/quiz-download/${data.id}`);
       setIsLoading(false);
     } catch (error) {
@@ -104,22 +99,18 @@ export function QuizForm(): JSX.Element {
     }
   };
 
-  const getQuizTypes = useCallback(async () => {
+  const listQuizTypes = useCallback(async () => {
     try {
-      const { data } = await api.get('/type_quiz', {
-        headers: {
-          Authorization: `Bearer ${auth.token}`,
-        },
-      });
+      const { data } = await getQuizTypes();
       setQuizTypes(data);
     } catch (error) {
       console.log(error);
     }
-  }, [auth.token]);
+  }, []);
 
   useEffect(() => {
-    getQuizTypes();
-  }, [getQuizTypes]);
+    listQuizTypes();
+  }, [listQuizTypes]);
 
   function logout() {
     updateAuth('');

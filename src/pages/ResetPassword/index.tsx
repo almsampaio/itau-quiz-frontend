@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
-import { api } from 'api/config';
+import { resetPassword } from 'api/user';
 import { useAuth } from 'contexts/AuthContext';
 
 import { LandingPageLayout } from 'components/LandingPageLayout';
@@ -32,15 +32,7 @@ export function ResetPassword(): JSX.Element {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
     try {
-      await api.post(
-        '/reset_password',
-        { password: data.password },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      await resetPassword(data.password);
       updateAuth(token);
       history.push('/');
     } catch (error) {

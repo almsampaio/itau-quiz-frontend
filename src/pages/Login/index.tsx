@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 
-import { api } from 'api/config';
+import { login } from 'api/user';
 import { useAuth } from 'contexts/AuthContext';
 
 import { LandingPageLayout } from 'components/LandingPageLayout';
@@ -30,11 +30,7 @@ export function Login(): JSX.Element {
   const onSubmit: SubmitHandler<Inputs> = async (user) => {
     setIsLoading(true);
     try {
-      const { data } = await api.post('/authenticate', user, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const { data } = await login(user);
       updateAuth(data.token);
       history.push('/');
     } catch (error) {
