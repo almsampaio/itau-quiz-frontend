@@ -1,9 +1,9 @@
 import { Redirect, Route } from 'react-router-dom';
 
 import { useAuth } from 'contexts/AuthContext';
-import { ForgotPassword } from 'pages/ForgotPassword';
-import { Login } from 'pages/Login';
-import { ResetPassword } from 'pages/ResetPassword';
+import ForgotPassword from 'pages/ForgotPassword';
+import Login from 'pages/Login';
+import ResetPassword from 'pages/ResetPassword';
 
 export function PublicRoutes() {
   const { auth } = useAuth();

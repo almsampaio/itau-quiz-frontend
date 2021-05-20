@@ -1,5 +1,5 @@
-import { QuizDownload } from 'pages/QuizDownload';
-import { QuizForm } from 'pages/QuizForm';
+import QuizDownload from 'pages/QuizDownload';
+import QuizForm from 'pages/QuizForm';
 import { PrivateRoute } from 'routes/PrivateRoute';
 
 export function PrivateRoutes() {
