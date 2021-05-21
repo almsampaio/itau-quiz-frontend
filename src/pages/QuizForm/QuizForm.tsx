@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
 import { createNewQuiz } from 'api/quiz';
@@ -13,11 +13,11 @@ import TextInput from 'components/TextInput';
 
 import * as S from './styles';
 
-type Inputs = {
+interface Inputs {
   type_quiz_id: number;
   title: string;
   password: string;
-};
+}
 
 export default function QuizForm(): JSX.Element {
   const { logout } = useAuth();
@@ -43,8 +43,22 @@ export default function QuizForm(): JSX.Element {
   } = useForm<Inputs>();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmit: SubmitHandler<Inputs> = async (data: any) => {
+  async function onSubmit(data: any) {
     setIsLoading(true);
+    const requestBody = formatRequestBody(data);
+    const formData = formatFormData({ data, requestBody });
+    try {
+      const { data } = await createNewQuiz(formData);
+      history.push(`/quiz-download/${data.id}`);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function formatRequestBody(data: any) {
     const requestBody = {
       type_quiz_id: data.type_quiz_id,
       name: data.title,
@@ -76,11 +90,17 @@ export default function QuizForm(): JSX.Element {
         return null;
       }).filter((isNull) => isNull),
     };
+    return requestBody;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function formatFormData({ data, requestBody }: any) {
     const formData = new FormData();
     formData.append('quiz', JSON.stringify(requestBody));
 
     const dataTransfer =
       new ClipboardEvent('').clipboardData || new DataTransfer();
+
     let counter = 0;
     NUMBER_OF_QUESTIONS.forEach((index) => {
       if (data[index].length) {
@@ -89,15 +109,9 @@ export default function QuizForm(): JSX.Element {
         counter += 1;
       }
     });
-    try {
-      const { data } = await createNewQuiz(formData);
-      history.push(`/quiz-download/${data.id}`);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
-    }
-  };
+
+    return formData;
+  }
 
   return (
     <QuizPageLayout>
