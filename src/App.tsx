@@ -5,7 +5,6 @@ import Loading from 'components/common/Loading';
 
 function App() {
   const { auth } = useAuth();
-  console.log(auth);
 
   return <>{auth.rehydrated ? <Routes /> : <Loading color="white" />}</>;
 }
