@@ -58,7 +58,7 @@ export const Form = styled.form`
       margin-top: 0.5rem;
     }
 
-    input[type="submit"] {
+    input[type='submit'] {
       padding: 0.8rem;
       cursor: pointer;
       width: 12.5rem;

@@ -52,7 +52,7 @@ export const Form = styled.form`
       margin-top: 1.25rem;
     }
 
-    button[type="submit"] {
+    button[type='submit'] {
       border-radius: 6px;
       padding: 0.8rem;
       cursor: pointer;
