@@ -6,8 +6,8 @@ import { getQuizFile } from 'api/quiz';
 import closeImg from 'assets/close.svg';
 import { useAuth } from 'contexts/AuthContext';
 
-import Loading from 'components/Loading';
-import QuizPageLayout from 'components/QuizPageLayout';
+import Loading from 'components/common/Loading';
+import QuizPageLayout from 'components/layout/QuizPageLayout';
 
 import * as S from './styles';
 

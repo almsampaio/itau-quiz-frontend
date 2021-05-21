@@ -5,9 +5,9 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import { resetPassword } from 'api/user';
 import { useAuth } from 'contexts/AuthContext';
 
-import LandingPageLayout from 'components/LandingPageLayout';
-import Loading from 'components/Loading';
-import TextInput from 'components/TextInput';
+import Loading from 'components/common/Loading';
+import TextInput from 'components/common/TextInput';
+import LandingPageLayout from 'components/layout/LandingPageLayout';
 
 import * as S from './styles';
 

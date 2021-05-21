@@ -6,7 +6,7 @@ import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import checkmarkImg from 'assets/checkmark.svg';
 
-import TextInput from 'components/TextInput';
+import TextInput from 'components/common/TextInput';
 
 import * as S from './styles';
 

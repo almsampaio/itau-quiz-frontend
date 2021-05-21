@@ -1,7 +1,7 @@
 import { useAuth } from 'contexts/AuthContext';
 import { Routes } from 'routes';
 
-import Loading from 'components/Loading';
+import Loading from 'components/common/Loading';
 
 function App() {
   const { auth } = useAuth();

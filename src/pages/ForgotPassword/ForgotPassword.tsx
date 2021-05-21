@@ -4,9 +4,9 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { requestPasswordReset } from 'api/user';
 
-import LandingPageLayout from 'components/LandingPageLayout';
-import Loading from 'components/Loading';
-import TextInput from 'components/TextInput';
+import Loading from 'components/common/Loading';
+import TextInput from 'components/common/TextInput';
+import LandingPageLayout from 'components/layout/LandingPageLayout';
 
 import * as S from './styles';
 

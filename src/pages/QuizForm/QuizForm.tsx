@@ -5,11 +5,11 @@ import { useHistory } from 'react-router-dom';
 import { createNewQuiz } from 'api/quiz';
 import { useAuth } from 'contexts/AuthContext';
 
-import FactOrFakeQuestion from 'components/FactOrFakeQuestion';
-import Loading from 'components/Loading';
-import QuizPageLayout from 'components/QuizPageLayout';
-import QuizTypeSelect from 'components/QuizTypeSelect';
-import TextInput from 'components/TextInput';
+import Loading from 'components/common/Loading';
+import TextInput from 'components/common/TextInput';
+import QuizPageLayout from 'components/layout/QuizPageLayout';
+import FactOrFakeQuestion from 'components/organism/FactOrFakeQuestion';
+import QuizTypeSelect from 'components/organism/QuizTypeSelect';
 
 import * as S from './styles';
 
