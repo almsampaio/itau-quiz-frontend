@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { getQuizFile } from 'api/quiz';
 import closeImg from 'assets/close.svg';
@@ -11,9 +11,8 @@ import QuizPageLayout from 'components/QuizPageLayout';
 import * as S from './styles';
 
 export default function QuizDownload(): JSX.Element {
-  const { updateAuth } = useAuth();
+  const { logout } = useAuth();
   const { id } = useParams<{ id: string }>();
-  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
 
   async function downloadQuiz() {
@@ -34,11 +33,6 @@ export default function QuizDownload(): JSX.Element {
       setIsLoading(false);
       console.log(error);
     }
-  }
-
-  function logout() {
-    updateAuth('');
-    history.push('/');
   }
 
   return (

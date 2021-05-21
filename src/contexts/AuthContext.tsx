@@ -5,14 +5,9 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { getQuizTypes } from 'api/quiz';
-
-const AuthContext = createContext<AuthContextType>({} as AuthContextType);
-
-interface AuthProviderProps {
-  children: ReactNode;
-}
 
 interface AuthData {
   token: string;
@@ -22,18 +17,31 @@ interface AuthData {
 interface AuthContextType {
   auth: AuthData;
   updateAuth: (token: string) => void;
+  logout: () => void;
 }
 
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+
 export function useAuth(): AuthContextType {
-  const { auth, updateAuth } = useContext(AuthContext);
-  return { auth, updateAuth };
+  const { auth, updateAuth, logout } = useContext(AuthContext);
+  return { auth, updateAuth, logout };
+}
+
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
 export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
+  const history = useHistory();
   const [auth, setAuth] = useState({
     token: '',
     rehydrated: false,
   });
+
+  function logout() {
+    updateAuth('');
+    history.push('/');
+  }
 
   async function rehydrate() {
     const tokenJSON = localStorage.getItem('auth');
@@ -78,7 +86,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   }
 
   return (
-    <AuthContext.Provider value={{ auth, updateAuth }}>
+    <AuthContext.Provider value={{ auth, updateAuth, logout }}>
       {children}
     </AuthContext.Provider>
   );

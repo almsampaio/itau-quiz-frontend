@@ -20,7 +20,7 @@ type Inputs = {
 
 export default function QuizForm(): JSX.Element {
   const [quizTypes, setQuizTypes] = useState([]);
-  const { updateAuth } = useAuth();
+  const { logout } = useAuth();
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const NUMBER_OF_QUESTIONS: string[] = [
@@ -111,11 +111,6 @@ export default function QuizForm(): JSX.Element {
   useEffect(() => {
     listQuizTypes();
   }, [listQuizTypes]);
-
-  function logout() {
-    updateAuth('');
-    history.push('/');
-  }
 
   return (
     <QuizPageLayout>
