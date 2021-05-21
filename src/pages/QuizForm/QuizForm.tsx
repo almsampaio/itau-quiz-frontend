@@ -6,10 +6,9 @@ import { createNewQuiz } from 'api/quiz';
 import { useAuth } from 'contexts/AuthContext';
 
 import Loading from 'components/common/Loading';
-import TextInput from 'components/common/TextInput';
 import QuizPageLayout from 'components/layout/QuizPageLayout';
 import FactOrFakeQuestion from 'components/organism/FactOrFakeQuestion';
-import QuizTypeSelect from 'components/organism/QuizTypeSelect';
+import QuizFormHeader from 'components/organism/QuizFormHeader';
 
 import * as S from './styles';
 
@@ -116,28 +115,17 @@ export default function QuizForm(): JSX.Element {
   return (
     <QuizPageLayout>
       <S.Quiz onSubmit={handleSubmit(onSubmit)}>
-        <section>
-          <h1>Sobre o quiz</h1>
-          <div>
-            <TextInput
-              register={register('title', {
-                required: { value: true, message: 'Este campo é obrigatório' },
-              })}
-              label="Título do Quiz"
-              id="title"
-              error={errors.title}
-              placeholder="Digite"
-            />
-            <QuizTypeSelect register={register} />
-          </div>
-        </section>
+        <QuizFormHeader register={register} error={errors.title} />
+
         <div className="hr" />
+
         <section>
           <h1>Quiz</h1>
           {NUMBER_OF_QUESTIONS.map((index) => (
             <FactOrFakeQuestion key={index} index={index} register={register} />
           ))}
         </section>
+
         <div className="buttons">
           <button type="button" onClick={logout}>
             Cancelar
