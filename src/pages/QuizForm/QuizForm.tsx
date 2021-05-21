@@ -1,13 +1,14 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
-import { createNewQuiz, getQuizTypes } from 'api/quiz';
+import { createNewQuiz } from 'api/quiz';
 import { useAuth } from 'contexts/AuthContext';
 
 import FactOrFakeQuestion from 'components/FactOrFakeQuestion';
 import Loading from 'components/Loading';
 import QuizPageLayout from 'components/QuizPageLayout';
+import QuizTypeSelect from 'components/QuizTypeSelect';
 import TextInput from 'components/TextInput';
 
 import * as S from './styles';
@@ -19,7 +20,6 @@ type Inputs = {
 };
 
 export default function QuizForm(): JSX.Element {
-  const [quizTypes, setQuizTypes] = useState([]);
   const { logout } = useAuth();
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
@@ -99,19 +99,6 @@ export default function QuizForm(): JSX.Element {
     }
   };
 
-  const listQuizTypes = useCallback(async () => {
-    try {
-      const { data } = await getQuizTypes();
-      setQuizTypes(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  useEffect(() => {
-    listQuizTypes();
-  }, [listQuizTypes]);
-
   return (
     <QuizPageLayout>
       <S.Quiz onSubmit={handleSubmit(onSubmit)}>
@@ -127,27 +114,7 @@ export default function QuizForm(): JSX.Element {
               error={errors.title}
               placeholder="Digite"
             />
-            <div>
-              <label>Tipo de Quiz</label>
-              <select
-                {...register('type_quiz_id', {
-                  required: {
-                    value: true,
-                    message: 'Este campo é obrigatório',
-                  },
-                })}
-                defaultValue=""
-              >
-                <option value="" disabled hidden>
-                  Selecione
-                </option>
-                {quizTypes.map(({ id, name }) => (
-                  <option key={name} value={id}>
-                    {name}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <QuizTypeSelect register={register} />
           </div>
         </section>
         <div className="hr" />

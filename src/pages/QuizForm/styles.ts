@@ -32,8 +32,7 @@ export const Quiz = styled.form`
           font-size: 1.1rem;
         }
 
-        input,
-        select {
+        input {
           display: block;
           width: 100%;
           padding: 0.9rem;
