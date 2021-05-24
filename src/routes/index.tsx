@@ -17,19 +17,8 @@ export function Routes() {
             {PublicRoutes.map((publicRoute) => publicRoute)}
             {PrivateRoutes.map((privateRoute) => privateRoute)}
 
-            <Route
-              exact
-              path="/"
-              render={() => {
-                return auth.token ? (
-                  <Redirect to="/quiz-form" />
-                ) : (
-                  <Redirect to="/login" />
-                );
-              }}
-            />
             <Route>
-              <Redirect to="/" />
+              <Redirect to="/login" />
             </Route>
           </Switch>
         </React.Suspense>
