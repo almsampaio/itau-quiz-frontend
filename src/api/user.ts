@@ -6,7 +6,7 @@ interface loginProps {
 }
 
 export const login = async (user: loginProps) =>
-  request.unauthorized().post('/complete_quiz', user);
+  request.unauthorized().post('/authenticate', user);
 
 export const requestPasswordReset = async (email: string) =>
   request.unauthorized().post('/forgot_password', email);
