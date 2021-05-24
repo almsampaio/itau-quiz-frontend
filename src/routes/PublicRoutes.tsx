@@ -1,28 +1,19 @@
-import { Redirect, Route } from 'react-router-dom';
+import React from 'react';
 
-import { useAuth } from 'contexts/AuthContext';
-import ForgotPassword from 'pages/ForgotPassword';
-import Login from 'pages/Login';
-import ResetPassword from 'pages/ResetPassword';
+import { PublicRoute } from 'routes/PublicRoute';
 
-export function PublicRoutes() {
-  const { auth } = useAuth();
-  return (
-    <>
-      <Route
-        exact
-        path="/"
-        render={() => {
-          return auth.token ? (
-            <Redirect to="/quiz-form" />
-          ) : (
-            <Redirect to="/login" />
-          );
-        }}
-      />
-      <Route path="/login" exact component={Login} />
-      <Route path="/password_reset/:token" component={ResetPassword} />
-      <Route path="/forgot-password" component={ForgotPassword} />
-    </>
-  );
-}
+const ForgotPassword = React.lazy(() => import('pages/ForgotPassword'));
+const Login = React.lazy(() => import('pages/Login'));
+const ResetPassword = React.lazy(() => import('pages/ResetPassword'));
+
+export const PublicRoutes = [
+  <PublicRoute path="/login" key="/login">
+    <Login />
+  </PublicRoute>,
+  <PublicRoute path="/password_reset/:token" key="/password_reset/:token">
+    <ResetPassword />
+  </PublicRoute>,
+  <PublicRoute path="/forgot-password" key="/forgot-password">
+    <ForgotPassword />
+  </PublicRoute>,
+];
